@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+      <script>
+    var socket = new WebSocket('ws://' + window.location.host + '/stocks/');
+
+    socket.onopen = function open() {
+      console.log('WebSockets connection created.');
+    };
+
+    socket.onmessage = function message(event) {
+    //  var data = JSON.parse(event.data);
+      console.log("data from socket:" + event.data);
+      lbl.innerText = event.data;
+    };
+
+    if (socket.readyState == WebSocket.OPEN) {
+      socket.onopen();
+    }
+    function start()
+    {
+      socket.send('start');
+    }
+    function stop() {
+        socket.send('stop');
+    }
+  </script>
+
+</head>
+<body>
+<h2>hello</h2>
+
+<button onclick="start()">Start</button>
+<button onclick="stop()">Stop</button>
+
+<label id="lbl">Data</label>
+</body>
+</html>
